@@ -9,6 +9,10 @@ dist-ssr/
 build/
 *.local
 
+# Next.js
+.next/
+out/
+
 # Environment variables
 .env
 .env.local
