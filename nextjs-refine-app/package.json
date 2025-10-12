@@ -1,0 +1,30 @@
+{
+    "name": "nextjs-refine-app",
+    "version": "1.0.0",
+    "description": "CRUD app using Next.js + Refine + Ant Design with SSR",
+    "private": true,
+    "scripts": {
+        "dev": "next dev -p 3002",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@ant-design/nextjs-registry": "^1.1.0",
+        "@refinedev/antd": "^5.37.0",
+        "@refinedev/core": "^4.45.0",
+        "@refinedev/nextjs-router": "^6.0.0",
+        "@refinedev/simple-rest": "^4.5.0",
+        "antd": "^5.12.0",
+        "axios": "^1.6.2",
+        "next": "^14.0.4",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.10.0",
+        "@types/react": "^18.2.42",
+        "@types/react-dom": "^18.2.17",
+        "typescript": "^5.3.2"
+    }
+}
