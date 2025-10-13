@@ -36,7 +36,9 @@ export default async function UserShowPage({
 }: {
     params: { id: string };
 }) {
+    console.log('🟢 SERVER: UserShowPage running on SERVER for user ID:', params.id);
     const user = await getUser(params.id);
+    console.log('🟢 SERVER: Data fetched on SERVER, user name:', user?.name);
 
     if (!user) {
         notFound();

@@ -28,6 +28,7 @@ export default function UserShowClient({
     initialUser,
     userId,
 }: UserShowClientProps) {
+    console.log('🔵 CLIENT: UserShowClient rendering on CLIENT with data from SERVER');
     const user = initialUser;
 
     return (
