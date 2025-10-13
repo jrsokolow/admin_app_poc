@@ -601,3 +601,52 @@ Our Next.js + Refine app demonstrates this perfectly:
 
 This hybrid approach gives you the best of both worlds! 🚀
 
+---
+
+## 🔄 Understanding RSC (React Server Components)
+
+### What About `?_rsc=` in Network Tab?
+
+If you're seeing requests like `/users/1?_rsc=tyl3d` in your Network tab, don't worry - this is **Next.js React Server Components** in action!
+
+### Two Navigation Types
+
+| Navigation Method | Response | Size | Server Runs? |
+|------------------|----------|------|--------------|
+| **Type URL manually** | Full HTML | ~50 KB | ✅ Yes |
+| **Click navigation link** | RSC Payload | ~10 KB | ✅ Yes |
+
+**Key Point:** Both methods use server-side execution! The only difference is the response format.
+
+### What is RSC Payload?
+
+When you navigate client-side (clicking links), Next.js sends a **serialized component tree** instead of full HTML:
+
+```
+// Instead of HTML:
+<!DOCTYPE html><html>...</html>
+
+// You get RSC Payload:
+1:HL["/_next/static/css/app.css"]
+2:I{"id":"1","name":"Leanne Graham",...}
+3:["$","div",null,{...}]
+```
+
+React deserializes this and updates the DOM - faster and more efficient!
+
+### Is This CSR?
+
+**No!** When you click a link:
+- ✅ Server Component still runs on server
+- ✅ Data still fetched on server
+- ✅ Just sends optimized payload instead of HTML
+- ❌ NOT traditional client-side rendering
+
+### Want to Learn More?
+
+See **[NEXTJS_RSC_GUIDE.md](NEXTJS_RSC_GUIDE.md)** for a complete explanation of React Server Components, including:
+- What RSC is and how it works
+- Why you see `?_rsc=` in Network tab
+- How to test it yourself
+- Code examples from your app
+

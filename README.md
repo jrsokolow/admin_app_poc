@@ -54,6 +54,7 @@ admin_app_poc/
 │
 ├── COMPARISON.md              # Framework comparison
 ├── SSR_VS_CSR_COMPARISON.md   # SSR vs CSR explained
+├── NEXTJS_RSC_GUIDE.md        # React Server Components guide
 ├── REFINE_VS_NO_REFINE_COMPARISON.md # Refine value demonstration
 └── README.md                  # This file
 ```
@@ -302,7 +303,18 @@ This document covers:
 - SEO impact
 - When to use each approach
 - Next.js implementation examples
-- Best practices
+- React Server Components (RSC) introduction
+
+### React Server Components Guide
+**[NEXTJS_RSC_GUIDE.md](NEXTJS_RSC_GUIDE.md)** - Understanding React Server Components
+
+This document covers:
+- What are React Server Components (RSC)
+- Why you see `?_rsc=` in Network tab
+- Server Components vs Client Components
+- How RSC works with SSR and CSR
+- Code examples from your app
+- Testing guide with console logs
 
 ### Refine Value Demonstration
 **[REFINE_VS_NO_REFINE_COMPARISON.md](REFINE_VS_NO_REFINE_COMPARISON.md)** - What Refine Does For You

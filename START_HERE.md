@@ -109,6 +109,8 @@ return (
 | [SIDE_BY_SIDE_COMPARISON.md](SIDE_BY_SIDE_COMPARISON.md) | Code examples | 20 min | Visual learners |
 | [COMPARISON.md](COMPARISON.md) | Deep analysis | 30 min | Thorough understanding |
 | [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) | Code organization | 15 min | Code explorers |
+| [SSR_VS_CSR_COMPARISON.md](SSR_VS_CSR_COMPARISON.md) | SSR vs CSR explained | 20 min | Next.js users |
+| [NEXTJS_RSC_GUIDE.md](NEXTJS_RSC_GUIDE.md) | React Server Components | 25 min | Next.js RSC questions |
 | **START_HERE.md** | You are here! | 5 min | Getting started |
 
 ## 🎨 Key Differences at a Glance
