@@ -15,6 +15,9 @@ import { useForm, Edit } from '@refinedev/antd';
 import { Form, Input, Button, Spin } from 'antd';
 import Link from 'next/link';
 
+// Disable static generation for this client component
+export const dynamic = 'force-dynamic';
+
 export default function UserEditPage({ params }: { params: { id: string } }) {
     const { formProps, saveButtonProps, queryResult } = useForm({
         action: 'edit',

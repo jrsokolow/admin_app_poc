@@ -12,28 +12,9 @@ import { Show } from '@refinedev/antd';
 import { Typography, Descriptions, Button, Space } from 'antd';
 import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import Link from 'next/link';
+import { User } from '@/types/user';
 
 const { Title } = Typography;
-
-interface User {
-    id: number;
-    name: string;
-    username: string;
-    email: string;
-    phone: string;
-    website: string;
-    address: {
-        street: string;
-        suite: string;
-        city: string;
-        zipcode: string;
-    };
-    company: {
-        name: string;
-        catchPhrase: string;
-        bs: string;
-    };
-}
 
 interface UserShowClientProps {
     initialUser: User;

@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { dataProvider } from '@/providers/data-provider';
 import UserListClient from './list-client';
+import { User } from '@/types/user';
 
 /**
  * USERS LIST PAGE - Server Component (SSR)
@@ -19,7 +20,7 @@ async function getUsers() {
     console.log('🟢 SERVER: Fetching users from API...');
 
     try {
-        const { data, total } = await dataProvider.getList({
+        const { data, total } = await dataProvider.getList<User>({
             resource: 'users',
             pagination: {
                 current: 1,
@@ -31,7 +32,7 @@ async function getUsers() {
         });
 
         console.log(`🟢 SERVER: Successfully fetched ${data.length} users`);
-        return { users: data, total };
+        return { users: data as User[], total };
     } catch (error) {
         console.error('Error fetching users:', error);
         return { users: [], total: 0 };

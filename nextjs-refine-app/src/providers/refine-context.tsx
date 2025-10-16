@@ -13,6 +13,7 @@ import routerProvider from '@refinedev/nextjs-router';
 import { dataProvider } from './data-provider';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import { ConfigProvider } from 'antd';
+import { Suspense } from 'react';
 
 export default function RefineContext({
     children,
@@ -28,28 +29,30 @@ export default function RefineContext({
                     },
                 }}
             >
-                <Refine
-                    routerProvider={routerProvider}
-                    dataProvider={dataProvider}
-                    resources={[
-                        {
-                            name: 'users',
-                            list: '/users',
-                            create: '/users/create',
-                            edit: '/users/edit/:id',
-                            show: '/users/:id',
-                            meta: {
-                                label: 'Users',
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Refine
+                        routerProvider={routerProvider}
+                        dataProvider={dataProvider}
+                        resources={[
+                            {
+                                name: 'users',
+                                list: '/users',
+                                create: '/users/create',
+                                edit: '/users/edit/:id',
+                                show: '/users/:id',
+                                meta: {
+                                    label: 'Users',
+                                },
                             },
-                        },
-                    ]}
-                    options={{
-                        syncWithLocation: true,
-                        warnWhenUnsavedChanges: true,
-                    }}
-                >
-                    {children}
-                </Refine>
+                        ]}
+                        options={{
+                            syncWithLocation: true,
+                            warnWhenUnsavedChanges: true,
+                        }}
+                    >
+                        {children}
+                    </Refine>
+                </Suspense>
             </ConfigProvider>
         </AntdRegistry>
     );

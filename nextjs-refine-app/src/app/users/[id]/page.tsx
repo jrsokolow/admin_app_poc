@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { dataProvider } from '@/providers/data-provider';
 import UserShowClient from './show-client';
 import { notFound } from 'next/navigation';
+import { User } from '@/types/user';
 
 /**
  * USER SHOW PAGE - Server Component (SSR)
@@ -14,14 +15,14 @@ import { notFound } from 'next/navigation';
  */
 
 // Fetch single user data on the server
-async function getUser(id: string) {
+async function getUser(id: string): Promise<User | null> {
     try {
-        const { data } = await dataProvider.getOne({
+        const { data } = await dataProvider.getOne<User>({
             resource: 'users',
             id,
             meta: {},
         });
-        return data;
+        return data as User;
     } catch (error) {
         console.error(`Error fetching user ${id}:`, error);
         return null;

@@ -16,6 +16,9 @@ import { Form, Input, Button } from 'antd';
 import { SaveOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 
+// Disable static generation for this client component
+export const dynamic = 'force-dynamic';
+
 export default function UserCreatePage() {
     console.log('🔵 CLIENT: UserCreatePage rendering in browser (CSR only)');
 

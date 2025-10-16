@@ -13,18 +13,7 @@ import { List } from '@refinedev/antd';
 import { Table, Space, Button } from 'antd';
 import { EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import Link from 'next/link';
-
-interface User {
-    id: number;
-    name: string;
-    username: string;
-    email: string;
-    phone: string;
-    website: string;
-    company: {
-        name: string;
-    };
-}
+import { User } from '@/types/user';
 
 interface UserListClientProps {
     initialUsers: User[];
