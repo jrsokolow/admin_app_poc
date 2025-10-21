@@ -1,0 +1,37 @@
+{
+    "name": "nextjs-chakra-app",
+    "version": "1.0.0",
+    "description": "Next.js + Refine + Chakra UI CRUD app",
+    "private": true,
+    "scripts": {
+        "dev": "next dev -p 3000",
+        "build": "next build",
+        "start": "next start -p 3000",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@chakra-ui/icons": "^2.1.1",
+        "@chakra-ui/next-js": "^2.2.0",
+        "@chakra-ui/react": "^2.8.2",
+        "@emotion/react": "^11.11.1",
+        "@emotion/styled": "^11.11.0",
+        "@refinedev/chakra-ui": "^2.26.17",
+        "@refinedev/core": "^4.45.0",
+        "@refinedev/nextjs-router": "^6.0.0",
+        "@refinedev/simple-rest": "^4.5.0",
+        "@tabler/icons-react": "^2.44.0",
+        "axios": "^1.6.2",
+        "framer-motion": "^10.16.16",
+        "next": "^14.0.4",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.10.0",
+        "@types/react": "^18.2.42",
+        "@types/react-dom": "^18.2.17",
+        "eslint": "^8.56.0",
+        "eslint-config-next": "^14.0.4",
+        "typescript": "^5.3.2"
+    }
+}

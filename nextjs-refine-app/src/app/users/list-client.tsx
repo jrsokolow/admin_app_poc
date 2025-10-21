@@ -16,27 +16,32 @@ import Link from 'next/link';
 import { User } from '@/types/user';
 
 interface UserListClientProps {
-    initialUsers: User[];
-    initialTotal: number;
+    initialUsers?: User[];
+    initialTotal?: number;
 }
 
 export default function UserListClient({
     initialUsers,
     initialTotal,
-}: UserListClientProps) {
+}: UserListClientProps = {}) {
     console.log('🔵 CLIENT: UserListClient component rendering in browser');
-    console.log('🔵 CLIENT: Received', initialUsers.length, 'users from server');
 
-    // useList hook can use SSR data or fetch client-side
+    if (initialUsers) {
+        console.log('🔵 CLIENT: Received', initialUsers.length, 'users from server (SSR)');
+    } else {
+        console.log('🔵 CLIENT: Fetching users from browser (CSR)');
+    }
+
+    // useList hook - will fetch client-side if no initial data provided
     const { data, isLoading } = useList<User>({
         resource: 'users',
-        queryOptions: {
-            // Use initial data from SSR
+        queryOptions: initialUsers && initialTotal ? {
+            // Use initial data from SSR (if provided)
             initialData: {
                 data: initialUsers,
                 total: initialTotal,
             },
-        },
+        } : undefined,
     });
 
     const users = data?.data || initialUsers;

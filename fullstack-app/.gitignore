@@ -10,6 +10,8 @@ coverage/
 # Next.js
 .next/
 out/
+
+# Build
 build/
 dist/
 
@@ -38,3 +40,5 @@ yarn-error.log*
 
 # OS
 Thumbs.db
+
+

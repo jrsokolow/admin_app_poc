@@ -7,6 +7,22 @@ This repository contains **four CRUD applications** to help you understand the p
 3. **Refine + Next.js** - Modern framework with SSR/CSR hybrid
 4. **Pure Next.js** - Next.js WITHOUT Refine (shows what Refine does for you!)
 
+## 🆕 Full-Stack Application (NEW!)
+
+**[fullstack-app/](./fullstack-app/)** - Complete dockerized application with:
+- **NestJS Backend** - Custom REST API with product management
+- **Next.js + Refine + Chakra UI Frontend** - Modern CRUD interface
+- **Docker Compose** - One-command deployment
+
+This demonstrates a production-ready setup with your own backend instead of using external APIs.
+
+**Quick Start:**
+```bash
+cd fullstack-app
+docker-compose up --build
+```
+Visit: http://localhost:3000
+
 ## 📚 Project Structure
 
 ```
@@ -51,6 +67,20 @@ admin_app_poc/
 │   │           ├── create/page.tsx # 🔵 CSR Create (manual)
 │   │           └── edit/[id]/page.tsx # 🔵 CSR Edit (manual)
 │   └── package.json
+│
+├── fullstack-app/             # 🆕 Full-Stack App (NestJS + Next.js)
+│   ├── nestjs-backend/        # NestJS REST API
+│   │   ├── src/
+│   │   │   └── products/      # Products CRUD
+│   │   ├── Dockerfile
+│   │   └── package.json
+│   ├── nextjs-chakra-app/     # Next.js + Refine + Chakra UI
+│   │   ├── src/
+│   │   │   └── app/products/  # Products CRUD pages
+│   │   ├── Dockerfile
+│   │   └── package.json
+│   ├── docker-compose.yml     # Docker orchestration
+│   └── README.md              # Fullstack app guide
 │
 ├── COMPARISON.md              # Framework comparison
 ├── SSR_VS_CSR_COMPARISON.md   # SSR vs CSR explained
