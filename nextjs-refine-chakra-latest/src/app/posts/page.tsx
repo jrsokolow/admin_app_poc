@@ -22,6 +22,7 @@ import {
 import { useTable, useNavigation } from '@refinedev/core';
 import { IconEdit, IconEye, IconTrash, IconPlus } from '@tabler/icons-react';
 import { Post } from '@/types/post';
+import { useEditModal } from '@/contexts/EditModalContext';
 
 export const dynamic = 'force-dynamic';
 
@@ -33,7 +34,8 @@ export default function PostsListPage() {
         },
     });
 
-    const { edit, show, create } = useNavigation();
+    const { show, create } = useNavigation();
+    const { openEditModal } = useEditModal();
 
     const { data, isLoading } = tableQueryResult;
     const posts = data?.data || [];
@@ -111,7 +113,7 @@ export default function PostsListPage() {
                                                     size="sm"
                                                     colorScheme="green"
                                                     variant="ghost"
-                                                    onClick={() => edit('posts', post.id)}
+                                                    onClick={() => openEditModal(post.id)}
                                                 />
                                                 <IconButton
                                                     aria-label="Delete"

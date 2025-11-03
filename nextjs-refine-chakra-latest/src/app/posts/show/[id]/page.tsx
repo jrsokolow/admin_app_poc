@@ -17,6 +17,7 @@ import {
 import { useShow, useNavigation } from '@refinedev/core';
 import { IconArrowLeft, IconEdit } from '@tabler/icons-react';
 import { Post } from '@/types/post';
+import { useEditModal } from '@/contexts/EditModalContext';
 
 export const dynamic = 'force-dynamic';
 
@@ -26,7 +27,8 @@ export default function PostShowPage({ params }: { params: { id: string } }) {
         id: params.id,
     });
 
-    const { list, edit } = useNavigation();
+    const { list } = useNavigation();
+    const { openEditModal } = useEditModal();
 
     const { data, isLoading } = queryResult;
     const post = data?.data;
@@ -63,7 +65,7 @@ export default function PostShowPage({ params }: { params: { id: string } }) {
                     <Button
                         leftIcon={<IconEdit size={20} />}
                         colorScheme="green"
-                        onClick={() => edit('posts', post.id)}
+                        onClick={() => openEditModal(post.id)}
                     >
                         Edit Post
                     </Button>

@@ -120,10 +120,12 @@ npm run lint     # Run ESLint
 - "Edit" button
 - "Back to Posts" link
 
-### 5. Edit Post (`/posts/edit/:id`)
-- Pre-filled form
+### 5. Edit Post (Modal Popup)
+- **Opens as a modal** - No page navigation!
+- Pre-filled form with current data
 - Same validation as create
 - Updates existing post
+- Auto-refreshes the table
 
 ## 🎯 Next Steps
 

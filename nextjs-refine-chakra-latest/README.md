@@ -52,11 +52,10 @@ nextjs-refine-chakra-latest/
 │   │   ├── providers.tsx        # Refine + Chakra providers
 │   │   └── posts/
 │   │       ├── page.tsx         # Posts list (Read)
+│   │       ├── components/
+│   │       │   └── EditPostModal.tsx  # Edit modal popup
 │   │       ├── create/
 │   │       │   └── page.tsx     # Create post
-│   │       ├── edit/
-│   │       │   └── [id]/
-│   │       │       └── page.tsx # Edit post
 │   │       └── show/
 │   │           └── [id]/
 │   │               └── page.tsx # View post details
@@ -65,7 +64,8 @@ nextjs-refine-chakra-latest/
 ├── package.json
 ├── tsconfig.json
 ├── next.config.js
-└── README.md
+├── README.md
+└── MODAL_EDIT_IMPLEMENTATION.md  # Modal implementation guide
 ```
 
 ## 🎯 CRUD Operations
@@ -88,9 +88,11 @@ nextjs-refine-chakra-latest/
   - Body (required, min 10 characters)
 
 ### Edit Post
-- URL: `/posts/edit/:id`
+- **Opens as modal/popup** (no separate page!)
 - Pre-filled form with existing data
 - Same validation as create
+- Auto-refreshes list after save
+- Modern UX - no page navigation required
 
 ## 🌐 API
 
