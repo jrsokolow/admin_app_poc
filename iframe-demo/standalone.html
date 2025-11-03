@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standalone Demo Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                sans-serif;
+            background: #F7FAFC;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 20px;
+            opacity: 0.95;
+            line-height: 1.6;
+            max-width: 800px;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .card h2 {
+            color: #2D3748;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .card p {
+            color: #4A5568;
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .feature {
+            background: #F7FAFC;
+            padding: 30px;
+            border-radius: 10px;
+            border: 2px solid #E2E8F0;
+            transition: all 0.3s;
+        }
+
+        .feature:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .feature h3 {
+            color: #2D3748;
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .feature p {
+            color: #718096;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .emoji {
+            font-size: 32px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 14px 28px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+
+        .button:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .button.secondary {
+            background: #48BB78;
+        }
+
+        .button.secondary:hover {
+            background: #38A169;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .tech-badge {
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .code-block {
+            background: #2D3748;
+            color: #E2E8F0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .highlight {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav
+            style="background: white; padding: 20px 30px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); display: flex; gap: 20px; flex-wrap: wrap;">
+            <a href="index.html"
+                style="text-decoration: none; color: #4A5568; font-weight: 600; padding: 10px 20px; border-radius: 6px; transition: all 0.2s;"
+                onmouseover="this.style.background='#EDF2F7'" onmouseout="this.style.background='transparent'">🏠 Home
+                (iFrame)</a>
+            <a href="standalone.html"
+                style="text-decoration: none; color: white; font-weight: 600; padding: 10px 20px; border-radius: 6px; background: #48BB78;">📄
+                Info Page</a>
+            <a href="about.html"
+                style="text-decoration: none; color: #4A5568; font-weight: 600; padding: 10px 20px; border-radius: 6px; transition: all 0.2s;"
+                onmouseover="this.style.background='#EDF2F7'" onmouseout="this.style.background='transparent'">ℹ️
+                About</a>
+            <a href="documentation.html"
+                style="text-decoration: none; color: #4A5568; font-weight: 600; padding: 10px 20px; border-radius: 6px; transition: all 0.2s;"
+                onmouseover="this.style.background='#EDF2F7'" onmouseout="this.style.background='transparent'">📚
+                Documentation</a>
+        </nav>
+
+        <div class="hero">
+            <h1>🎨 Independent Demo Page</h1>
+            <p>This is a standalone HTML page showcasing the Next.js + Refine + Chakra UI application architecture and
+                features.</p>
+        </div>
+
+        <div class="card">
+            <h2>📦 What's Inside?</h2>
+            <p>A modern full-stack CRUD application built with cutting-edge technologies:</p>
+
+            <div class="tech-stack">
+                <div class="tech-badge">Next.js 15.0.3</div>
+                <div class="tech-badge">Refine 4.55.2</div>
+                <div class="tech-badge">Chakra UI 2.10.4</div>
+                <div class="tech-badge">TypeScript 5.6.3</div>
+                <div class="tech-badge">React 18.3.1</div>
+            </div>
+
+            <div class="code-block">
+                <div>📂 Project: <span class="highlight">nextjs-refine-chakra-latest</span></div>
+                <div>🌐 API: <span class="highlight">https://jsonplaceholder.typicode.com</span></div>
+                <div>🎯 Resource: <span class="highlight">Posts (100 sample items)</span></div>
+                <div>🚀 Port: <span class="highlight">http://localhost:3010</span></div>
+            </div>
+
+            <a href="index.html" class="button">View in iFrame</a>
+            <a href="http://localhost:3010" target="_blank" class="button secondary">Open Application</a>
+        </div>
+
+        <div class="card">
+            <h2>✨ Key Features</h2>
+            <div class="grid">
+                <div class="feature">
+                    <span class="emoji">📝</span>
+                    <h3>Full CRUD Operations</h3>
+                    <p>Create, Read, Update, and Delete posts with a complete user interface and form validation.</p>
+                </div>
+                <div class="feature">
+                    <span class="emoji">🎭</span>
+                    <h3>Minimizable Edit Modal</h3>
+                    <p>Edit posts in a popup that can be minimized to corner while you browse - persists across
+                        navigation!</p>
+                </div>
+                <div class="feature">
+                    <span class="emoji">🎨</span>
+                    <h3>Beautiful UI</h3>
+                    <p>Modern, accessible components from Chakra UI with consistent theming and responsive design.</p>
+                </div>
+                <div class="feature">
+                    <span class="emoji">⚡</span>
+                    <h3>Rapid Development</h3>
+                    <p>Refine framework provides automatic data fetching, caching, and state management.</p>
+                </div>
+                <div class="feature">
+                    <span class="emoji">🔒</span>
+                    <h3>Type Safety</h3>
+                    <p>Full TypeScript support with strict typing for better code quality and developer experience.</p>
+                </div>
+                <div class="feature">
+                    <span class="emoji">🌐</span>
+                    <h3>Ready-to-Use API</h3>
+                    <p>Integrated with JSONPlaceholder - a free fake REST API for testing and prototyping.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🚀 How to Run</h2>
+
+            <div class="code-block">
+                # Install dependencies<br>
+                cd nextjs-refine-chakra-latest<br>
+                npm install<br>
+                <br>
+                # Start development server<br>
+                npm run dev<br>
+                <br>
+                # Open browser<br>
+                # http://localhost:3010
+            </div>
+
+            <p>The application will be available at <strong>http://localhost:3010</strong></p>
+        </div>
+
+        <div class="card">
+            <h2>🎯 What You Can Do</h2>
+            <div class="grid">
+                <div class="feature">
+                    <h3>📋 List Posts</h3>
+                    <p>Browse through 100 sample posts with pagination and see all details in a clean table.</p>
+                </div>
+                <div class="feature">
+                    <h3>➕ Create Posts</h3>
+                    <p>Add new posts using a form with validation for User ID, Title, and Body fields.</p>
+                </div>
+                <div class="feature">
+                    <h3>✏️ Edit Posts</h3>
+                    <p>Update any post in a minimizable modal that stays visible even when you navigate!</p>
+                </div>
+                <div class="feature">
+                    <h3>👁️ View Details</h3>
+                    <p>See complete post information with nice formatting and badges.</p>
+                </div>
+                <div class="feature">
+                    <h3>🗑️ Delete Posts</h3>
+                    <p>Remove posts with a single click (changes won't persist - it's a demo API).</p>
+                </div>
+                <div class="feature">
+                    <h3>🔄 Navigation</h3>
+                    <p>Smooth client-side navigation between pages with Next.js App Router.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🔍 Technical Highlights</h2>
+            <p><strong>Modal Minimize Feature:</strong></p>
+            <p>The edit modal uses React Context to persist across navigation. When minimized, it renders as a fixed Box
+                component (non-blocking) instead of a Modal component (blocking).</p>
+
+            <p style="margin-top: 20px;"><strong>Solution to Background Blocking:</strong></p>
+            <p>By conditionally rendering <code>&lt;Box&gt;</code> when minimized instead of <code>&lt;Modal&gt;</code>,
+                we bypass the Modal's built-in focus trap and event blocking, allowing full interaction with the
+                background.</p>
+
+            <div class="code-block">
+                if (isMinimized) {<br>
+                &nbsp;&nbsp;return &lt;Box&gt;...&lt;/Box&gt;; // Non-blocking!<br>
+                }<br>
+                return &lt;Modal&gt;...&lt;/Modal&gt;; // Blocks normally
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Built with ❤️ using the latest web technologies</p>
+        <p><a href="https://nextjs.org" target="_blank">Next.js</a> •
+            <a href="https://refine.dev" target="_blank">Refine</a> •
+            <a href="https://chakra-ui.com" target="_blank">Chakra UI</a>
+        </p>
+    </footer>
+
+    <script>
+        // Auto-load iframe on page load
+        window.addEventListener('load', function () {
+            setTimeout(hideLoading, 2000);
+        });
+    </script>
+</body>
+
+</html>

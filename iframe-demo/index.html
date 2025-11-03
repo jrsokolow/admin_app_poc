@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next.js + Refine + Chakra UI - iFrame Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .header h1 {
+            color: #2D3748;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #718096;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .controls label {
+            color: #2D3748;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .controls input {
+            padding: 8px 12px;
+            border: 2px solid #E2E8F0;
+            border-radius: 6px;
+            font-size: 14px;
+            width: 300px;
+        }
+
+        .controls button {
+            padding: 10px 20px;
+            background: #4299E1;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .controls button:hover {
+            background: #3182CE;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(66, 153, 225, 0.4);
+        }
+
+        .controls button:active {
+            transform: translateY(0);
+        }
+
+        .info-box {
+            background: #FFF5F5;
+            border-left: 4px solid #F56565;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .info-box.success {
+            background: #F0FFF4;
+            border-left-color: #48BB78;
+        }
+
+        .info-box.info {
+            background: #EBF8FF;
+            border-left-color: #4299E1;
+        }
+
+        .info-box p {
+            color: #2D3748;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .iframe-wrapper {
+            background: white;
+            padding: 10px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            height: 800px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #E2E8F0;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #718096;
+        }
+
+        .spinner {
+            border: 4px solid #E2E8F0;
+            border-top: 4px solid #4299E1;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card h3 {
+            color: #2D3748;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            color: #718096;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #4299E1;
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .controls input {
+                width: 100%;
+            }
+
+            .iframe-container {
+                height: 600px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="nav" style="background: white; padding: 20px 30px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); display: flex; gap: 20px; flex-wrap: wrap;">
+            <a href="index.html" style="text-decoration: none; color: white; font-weight: 600; padding: 10px 20px; border-radius: 6px; background: #667eea;">🏠 Home (iFrame)</a>
+            <a href="standalone.html" style="text-decoration: none; color: #4A5568; font-weight: 600; padding: 10px 20px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#EDF2F7'" onmouseout="this.style.background='transparent'">📄 Info Page</a>
+            <a href="about.html" style="text-decoration: none; color: #4A5568; font-weight: 600; padding: 10px 20px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#EDF2F7'" onmouseout="this.style.background='transparent'">ℹ️ About</a>
+            <a href="documentation.html" style="text-decoration: none; color: #4A5568; font-weight: 600; padding: 10px 20px; border-radius: 6px; transition: all 0.2s;" onmouseover="this.style.background='#EDF2F7'" onmouseout="this.style.background='transparent'">📚 Documentation</a>
+        </nav>
+        
+        <div class="header">
+            <h1>🚀 Next.js + Refine + Chakra UI Demo</h1>
+            <p>This page demonstrates the CRUD application running in an iframe. The app is built with the latest versions of Next.js, Refine framework, and Chakra UI.</p>
+            <div style="margin-top: 15px;">
+                <span class="badge">Next.js 15.0.3</span>
+                <span class="badge">Refine 4.55.2</span>
+                <span class="badge">Chakra UI 2.10.4</span>
+                <span class="badge">TypeScript 5.6.3</span>
+            </div>
+        </div>
+
+        <div class="info-box info">
+            <p><strong>ℹ️ Note:</strong> Make sure the Next.js development server is running on port 3010.</p>
+            <p>Run: <code>cd nextjs-refine-chakra-latest && npm run dev</code></p>
+        </div>
+
+        <div class="controls">
+            <label for="iframeUrl">iFrame URL:</label>
+            <input 
+                type="text" 
+                id="iframeUrl" 
+                value="http://localhost:3010" 
+                placeholder="Enter URL to load in iframe"
+            />
+            <button onclick="loadIframe()">Load</button>
+            <button onclick="reloadIframe()">Reload</button>
+            <button onclick="openInNewTab()">Open in New Tab</button>
+        </div>
+
+        <div class="info-box success">
+            <p><strong>✨ Features you can test:</strong></p>
+            <p>• View list of 100 posts from JSONPlaceholder API</p>
+            <p>• Create new posts with form validation</p>
+            <p>• Edit posts in a minimizable popup modal (stays visible across navigation!)</p>
+            <p>• View detailed post information</p>
+            <p>• All with beautiful Chakra UI components</p>
+        </div>
+
+        <div class="iframe-wrapper">
+            <div class="iframe-container">
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Loading application...</p>
+                </div>
+                <iframe 
+                    id="appIframe" 
+                    src="http://localhost:3010"
+                    title="Next.js + Refine + Chakra UI Application"
+                    allow="fullscreen"
+                    onload="hideLoading()"
+                ></iframe>
+            </div>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <h3>🎨 Modern UI</h3>
+                <p>Beautiful, accessible components with Chakra UI. Fully responsive and dark mode ready.</p>
+            </div>
+            <div class="feature-card">
+                <h3>⚡ Fast Development</h3>
+                <p>Refine framework provides automatic CRUD operations, routing, and state management.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🔒 Type Safe</h3>
+                <p>Full TypeScript support throughout the application for better developer experience.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📱 Responsive</h3>
+                <p>Works perfectly on desktop, tablet, and mobile devices with responsive design.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function hideLoading() {
+            const loading = document.getElementById('loading');
+            if (loading) {
+                loading.style.display = 'none';
+            }
+        }
+
+        function loadIframe() {
+            const url = document.getElementById('iframeUrl').value;
+            const iframe = document.getElementById('appIframe');
+            const loading = document.getElementById('loading');
+            
+            loading.style.display = 'block';
+            iframe.src = url;
+        }
+
+        function reloadIframe() {
+            const iframe = document.getElementById('appIframe');
+            const loading = document.getElementById('loading');
+            
+            loading.style.display = 'block';
+            iframe.src = iframe.src;
+        }
+
+        function openInNewTab() {
+            const url = document.getElementById('iframeUrl').value;
+            window.open(url, '_blank');
+        }
+
+        // Show loading initially
+        window.addEventListener('load', function() {
+            const iframe = document.getElementById('appIframe');
+            if (!iframe.contentWindow.document.body) {
+                document.getElementById('loading').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
+

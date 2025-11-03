@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - Next.js + Refine + Chakra UI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                sans-serif;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #4A5568;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .nav a:hover {
+            background: #EDF2F7;
+            color: #2D3748;
+        }
+
+        .nav a.active {
+            background: #ED8936;
+            color: white;
+        }
+
+        .hero {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(237, 137, 54, 0.3);
+        }
+
+        .hero h1 {
+            color: #2D3748;
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            color: #4A5568;
+            font-size: 20px;
+            line-height: 1.6;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .card h2 {
+            color: #2D3748;
+            font-size: 28px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #ED8936;
+        }
+
+        .card h3 {
+            color: #2D3748;
+            font-size: 22px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .card p, .card li {
+            color: #4A5568;
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .card ul {
+            margin-left: 30px;
+            margin-top: 10px;
+        }
+
+        .code-block {
+            background: #2D3748;
+            color: #E2E8F0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .command {
+            color: #48BB78;
+        }
+
+        .comment {
+            color: #A0AEC0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table th {
+            background: #F7FAFC;
+            color: #2D3748;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #E2E8F0;
+        }
+
+        table td {
+            padding: 12px;
+            border-bottom: 1px solid #E2E8F0;
+            color: #4A5568;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #ED8936;
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="nav">
+            <a href="index.html">🏠 Home (iFrame)</a>
+            <a href="standalone.html">📄 Info Page</a>
+            <a href="about.html">ℹ️ About</a>
+            <a href="documentation.html" class="active">📚 Documentation</a>
+        </nav>
+
+        <div class="hero">
+            <h1>📚 Documentation</h1>
+            <p>Complete guide to using and understanding the Next.js + Refine + Chakra UI application.</p>
+        </div>
+
+        <div class="card">
+            <h2>🚀 Quick Start</h2>
+            
+            <h3>Installation</h3>
+            <div class="code-block">
+<span class="comment"># Navigate to project</span><br>
+<span class="command">cd nextjs-refine-chakra-latest</span><br>
+<br>
+<span class="comment"># Install dependencies</span><br>
+<span class="command">npm install</span><br>
+<br>
+<span class="comment"># Start development server</span><br>
+<span class="command">npm run dev</span><br>
+<br>
+<span class="comment"># Open browser</span><br>
+<span class="command"># http://localhost:3010</span>
+            </div>
+
+            <h3>Available Scripts</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Command</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>npm run dev</code></td>
+                        <td>Start development server on port 3010</td>
+                    </tr>
+                    <tr>
+                        <td><code>npm run build</code></td>
+                        <td>Build for production</td>
+                    </tr>
+                    <tr>
+                        <td><code>npm run start</code></td>
+                        <td>Start production server</td>
+                    </tr>
+                    <tr>
+                        <td><code>npm run lint</code></td>
+                        <td>Run ESLint code quality checks</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>📋 API Endpoints</h2>
+            <p>The application uses JSONPlaceholder API:</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Endpoint</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="badge">GET</span></td>
+                        <td>/posts</td>
+                        <td>Get all posts</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge">GET</span></td>
+                        <td>/posts/:id</td>
+                        <td>Get single post by ID</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge">POST</span></td>
+                        <td>/posts</td>
+                        <td>Create new post</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge">PUT</span></td>
+                        <td>/posts/:id</td>
+                        <td>Update post</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge">DELETE</span></td>
+                        <td>/posts/:id</td>
+                        <td>Delete post</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>🎨 Features</h2>
+            
+            <h3>CRUD Operations</h3>
+            <ul>
+                <li><strong>List Posts:</strong> View all 100 posts in a table with User ID, Title, and Body</li>
+                <li><strong>Create Post:</strong> Form with validation (User ID required, Title min 5 chars, Body min 10 chars)</li>
+                <li><strong>Edit Post:</strong> Minimizable modal popup that persists across navigation</li>
+                <li><strong>Show Post:</strong> Detailed view with all post information and edit button</li>
+                <li><strong>Delete Post:</strong> Remove posts (changes won't persist - demo API)</li>
+            </ul>
+
+            <h3>Modal Minimize/Maximize</h3>
+            <p>The edit modal includes an innovative minimize feature:</p>
+            <ul>
+                <li>Click <strong>minus (-)</strong> to minimize → Modal becomes a small blue widget at bottom-right</li>
+                <li>Background becomes <strong>fully interactive</strong> - you can navigate, view posts, etc.</li>
+                <li>Modal <strong>persists across pages</strong> - stays minimized even when you navigate</li>
+                <li>Click <strong>maximize (⛶)</strong> to restore → Full modal with your edits preserved</li>
+            </ul>
+
+            <h3>How Background Access Works</h3>
+            <p>When minimized, the component switches from <code>&lt;Modal&gt;</code> to <code>&lt;Box&gt;</code>:</p>
+            <div class="code-block">
+<span class="comment">// When minimized - renders as Box (non-blocking)</span><br>
+if (isMinimized) {<br>
+&nbsp;&nbsp;return &lt;Box&gt;...&lt;/Box&gt;;<br>
+}<br>
+<br>
+<span class="comment">// When maximized - renders as Modal (blocking)</span><br>
+return &lt;Modal&gt;...&lt;/Modal&gt;;
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📂 Project Structure</h2>
+            <div class="code-block">
+nextjs-refine-chakra-latest/<br>
+├── src/<br>
+│   ├── app/<br>
+│   │   ├── layout.tsx<br>
+│   │   ├── page.tsx<br>
+│   │   ├── providers.tsx<br>
+│   │   └── posts/<br>
+│   │       ├── page.tsx              <span class="comment"># List</span><br>
+│   │       ├── components/<br>
+│   │       │   └── EditPostModal.tsx <span class="comment"># Edit modal</span><br>
+│   │       ├── create/page.tsx       <span class="comment"># Create</span><br>
+│   │       └── show/[id]/page.tsx    <span class="comment"># Show</span><br>
+│   ├── contexts/<br>
+│   │   └── EditModalContext.tsx      <span class="comment"># Global modal state</span><br>
+│   └── types/<br>
+│       └── post.ts<br>
+├── package.json<br>
+└── README.md
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🔗 Resources</h2>
+            <ul>
+                <li><a href="https://nextjs.org/docs" target="_blank" style="color: #667eea;">Next.js Documentation</a></li>
+                <li><a href="https://refine.dev/docs" target="_blank" style="color: #667eea;">Refine Documentation</a></li>
+                <li><a href="https://chakra-ui.com/docs" target="_blank" style="color: #667eea;">Chakra UI Documentation</a></li>
+                <li><a href="https://jsonplaceholder.typicode.com" target="_blank" style="color: #667eea;">JSONPlaceholder API</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
+
