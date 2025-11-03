@@ -48,7 +48,7 @@ export default function PostsListPage() {
             <Box bg={bgColor} shadow="md" borderRadius="lg" p={6}>
                 <HStack justify="space-between" mb={6}>
                     <Heading as="h1" size="lg">
-                        Posts (Resizable Columns)
+                        Posts (Resizable & Reorderable)
                     </Heading>
                     <Button
                         leftIcon={<IconPlus size={20} />}
