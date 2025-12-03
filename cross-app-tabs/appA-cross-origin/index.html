@@ -301,13 +301,13 @@
         function navigateToAppB() {
             const appBBaseUrl = document.getElementById('appBUrl').value;
             const appBFullUrl = appBBaseUrl + '/index.html?from=appA';
-
+            
             try {
                 // Open App B with named window (works cross-origin!)
+                // Empty features string = opens in TAB instead of window
                 const appBWindow = window.open(
                     appBFullUrl,
-                    TAB_NAME, // Same name = reuse tab
-                    'width=1200,height=800'
+                    TAB_NAME // Same name = reuse tab
                 );
 
                 if (appBWindow) {

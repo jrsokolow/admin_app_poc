@@ -301,10 +301,10 @@
             
             try {
                 // Open App A with named window (works cross-origin!)
+                // Empty features string = opens in TAB instead of window
                 const appAWindow = window.open(
                     appAFullUrl,
-                    TAB_NAME, // Same name = reuse tab
-                    'width=1200,height=800'
+                    TAB_NAME // Same name = reuse tab
                 );
 
                 if (appAWindow) {

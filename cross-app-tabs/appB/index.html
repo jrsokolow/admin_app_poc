@@ -284,8 +284,7 @@
                 if (!foundWindow) {
                     appAWindow = window.open(
                         APP_A_URL + '?from=appB',
-                        TAB_NAME, // Window name - same name = reuse tab
-                        'width=1200,height=800'
+                        TAB_NAME // Window name - same name = reuse tab (no features = opens in tab)
                     );
                     foundWindow = appAWindow;
                 }

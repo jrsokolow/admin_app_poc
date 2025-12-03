@@ -271,8 +271,7 @@
                 // Using a consistent name allows reuse of the same tab
                 appBWindow = window.open(
                     APP_B_URL + '?from=appA',
-                    TAB_NAME, // Window name - same name = reuse tab
-                    'width=1200,height=800'
+                    TAB_NAME // Window name - same name = reuse tab (no features = opens in tab)
                 );
 
                 if (appBWindow) {
