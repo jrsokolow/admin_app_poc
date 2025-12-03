@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App A - Cross-Origin Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .app-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .origin-badge {
+            display: inline-block;
+            background: #fbbf24;
+            color: #78350f;
+            padding: 6px 16px;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 0.85em;
+            margin-left: 10px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .origin-info {
+            background: #eff6ff;
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .origin-info h3 {
+            color: #1e40af;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .origin-info .origin-url {
+            font-family: 'Courier New', monospace;
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            color: #1e40af;
+            font-weight: bold;
+            word-break: break-all;
+        }
+
+        .config-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .config-section h4 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .config-section label {
+            display: block;
+            color: #666;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .config-section input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .config-section input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .deep-link-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 18px 36px;
+            border-radius: 12px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+            width: 100%;
+            margin: 15px 0;
+        }
+
+        .deep-link-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+        }
+
+        .status {
+            background: #f0f9ff;
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .status.active {
+            background: #d1fae5;
+            border-color: #10b981;
+        }
+
+        .status h3 {
+            color: #3b82f6;
+            margin-bottom: 10px;
+        }
+
+        .status.active h3 {
+            color: #10b981;
+        }
+
+        .status p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .info-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .info-box h4 {
+            color: #92400e;
+            margin-bottom: 8px;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+            color: #78350f;
+            line-height: 1.8;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 10000;
+            font-weight: 600;
+            animation: slideIn 0.3s ease;
+            display: none;
+        }
+
+        .notification.show {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            <span class="app-badge">APP A</span>
+            <span class="origin-badge">Cross-Origin</span>
+        </div>
+        <h1>🚀 App A</h1>
+        <p class="subtitle">Simple Cross-Origin Tab Switching</p>
+
+        <div class="origin-info">
+            <h3>🌐 Running on:</h3>
+            <div class="origin-url" id="currentOrigin">-</div>
+        </div>
+
+        <div class="config-section">
+            <h4>⚙️ App B URL (different origin):</h4>
+            <input type="text" id="appBUrl" value="http://127.0.0.1:8081" placeholder="http://127.0.0.1:8081">
+            <p style="color: #666; font-size: 0.85em; margin-top: 8px;">
+                💡 "localhost" vs "127.0.0.1" = Different domains (true cross-origin test!)
+            </p>
+        </div>
+
+        <button class="deep-link-btn" onclick="navigateToAppB()">
+            🔗 Navigate to App B
+        </button>
+
+        <div class="status" id="status">
+            <h3>📊 Status</h3>
+            <p id="statusText">Ready to test cross-origin tab switching</p>
+        </div>
+
+        <div class="info-box">
+            <h4>💡 What Works Cross-Origin:</h4>
+            <ul>
+                <li>✅ Named window tab reuse</li>
+                <li>✅ Tab focus switching</li>
+                <li>✅ URL parameters for data</li>
+                <li>❌ localStorage events (blocked)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+        // Constants
+        const TAB_NAME = 'appB_cross_origin';
+        const APP_A_TAB_NAME = 'appA_cross_origin';
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            // Set window name for identification
+            if (!window.name) {
+                window.name = APP_A_TAB_NAME;
+            }
+
+            // Display current origin
+            document.getElementById('currentOrigin').textContent = window.location.origin;
+
+            // Check if we were opened from App B
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('from') === 'appB') {
+                showNotification('✅ Switched from App B!');
+                updateStatus('Switched from App B (cross-origin)');
+            }
+
+            // Setup focus listener
+            window.addEventListener('focus', () => {
+                updateStatus('Tab focused - returned from App B');
+            });
+        });
+
+        // Navigate to App B (cross-origin)
+        function navigateToAppB() {
+            const appBBaseUrl = document.getElementById('appBUrl').value;
+            const appBFullUrl = appBBaseUrl + '/index.html?from=appA';
+
+            try {
+                // Open App B with named window (works cross-origin!)
+                const appBWindow = window.open(
+                    appBFullUrl,
+                    TAB_NAME, // Same name = reuse tab
+                    'width=1200,height=800'
+                );
+
+                if (appBWindow) {
+                    appBWindow.focus();
+                    showNotification('🔄 Switched to App B tab!');
+                } else {
+                    alert('Popup blocked! Please allow popups for this site.');
+                }
+            } catch (e) {
+                console.error('Error:', e);
+                showNotification('❌ Error: ' + e.message, 'error');
+            }
+        }
+
+        // Update status
+        function updateStatus(message) {
+            const status = document.getElementById('status');
+            const statusText = document.getElementById('statusText');
+            statusText.textContent = message;
+            status.classList.add('active');
+            setTimeout(() => {
+                status.classList.remove('active');
+                statusText.textContent = 'Ready to test cross-origin tab switching';
+            }, 3000);
+        }
+
+        // Show notification
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.background = type === 'error' ? '#ef4444' : '#10b981';
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>

@@ -154,6 +154,22 @@ window.addEventListener('focus', () => {
 - Tab information display
 - Visual feedback on navigation
 
+## ✅ Cross-Origin Support
+
+**Good news!** The tab switching technique works **perfectly across different origins**:
+
+- ✅ `window.open(url, name)` works cross-origin
+- ✅ Tab reuse works cross-origin
+- ✅ `window.focus()` works cross-origin
+- ✅ URL parameters work cross-origin
+
+**What doesn't work cross-origin:**
+- ❌ localStorage events between apps
+- ❌ Reading `window.opener.location` or other properties
+- ❌ Direct window manipulation
+
+**Bottom line:** For basic tab switching between apps on different domains, this solution works great!
+
 ## ⚠️ Important Notes
 
 ### Browser Security
@@ -163,13 +179,14 @@ window.addEventListener('focus', () => {
    - Always call `window.open()` directly from a click handler
 
 2. **Same-Origin Policy:**
-   - Apps must be on the same origin to access each other's windows
-   - Cross-origin access is restricted for security
+   - ✅ Tab switching works ACROSS different origins
+   - ❌ Reading window properties (like `window.opener.location`) is restricted cross-origin
+   - ❌ localStorage events don't fire across different origins
 
 3. **Window Naming:**
    - Window names are case-sensitive
    - Use consistent names across both apps
-   - Names are per-origin (different origins can have same name)
+   - **Window names work globally** - this is why tab switching works cross-origin!
 
 ### Limitations
 
