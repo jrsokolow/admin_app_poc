@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App A - Cross-App Tab Navigation Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .app-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .status {
+            background: #f0f9ff;
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .status.active {
+            background: #d1fae5;
+            border-color: #10b981;
+        }
+
+        .status h3 {
+            color: #3b82f6;
+            margin-bottom: 10px;
+        }
+
+        .status.active h3 {
+            color: #10b981;
+        }
+
+        .status p {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .deep-link-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 18px 36px;
+            border-radius: 12px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+            width: 100%;
+            margin: 15px 0;
+        }
+
+        .deep-link-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+        }
+
+        .deep-link-btn:active {
+            transform: translateY(0);
+        }
+
+        .info-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .info-box h4 {
+            color: #92400e;
+            margin-bottom: 8px;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+            color: #78350f;
+            line-height: 1.8;
+        }
+
+        .tab-info {
+            background: #e0e7ff;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #4338ca;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 10000;
+            font-weight: 600;
+            animation: slideIn 0.3s ease;
+            display: none;
+        }
+
+        .notification.show {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .demo-steps {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .demo-steps h4 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .demo-steps ol {
+            margin-left: 20px;
+            line-height: 2;
+            color: #555;
+        }
+
+        .demo-steps li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="app-badge">APP A</div>
+        <h1>🚀 App A</h1>
+        <p class="subtitle">Cross-App Tab Navigation Demo</p>
+
+        <div class="status" id="status">
+            <h3>📊 Current Status</h3>
+            <p id="statusText">This is App A running in the current tab.</p>
+        </div>
+
+        <div class="tab-info" id="tabInfo">
+            Tab Name: <span id="tabName">appA</span><br>
+            Window ID: <span id="windowId">-</span><br>
+            Focused: <span id="focused">Yes</span>
+        </div>
+
+        <button class="deep-link-btn" onclick="navigateToAppB()">
+            🔗 Navigate to App B
+        </button>
+
+        <div class="info-box">
+            <h4>💡 How It Works:</h4>
+            <ul>
+                <li>Clicking the button will open App B in a <strong>new tab</strong> (if not already open)</li>
+                <li>If App B tab already exists, it will <strong>switch to that tab</strong></li>
+                <li>No new tabs are created when switching</li>
+                <li>Both apps can navigate to each other</li>
+            </ul>
+        </div>
+
+        <div class="demo-steps">
+            <h4>📝 Demo Steps:</h4>
+            <ol>
+                <li>You're currently viewing <strong>App A</strong></li>
+                <li>Click "Navigate to App B" button</li>
+                <li>App B will open in a new tab</li>
+                <li>Click "Navigate to App A" in App B</li>
+                <li>You'll switch back to this tab (App A)</li>
+                <li>Repeat to see tab switching in action!</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+        let appBWindow = null;
+        const APP_B_URL = '../appB/index.html';
+        const TAB_NAME = 'appB';
+        const APP_A_TAB_NAME = 'appA'; // This app's own tab name
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            // Set window name for identification (so App B can find/reuse this tab)
+            if (!window.name) {
+                window.name = APP_A_TAB_NAME;
+            }
+
+            updateTabInfo();
+            setupFocusListener();
+            setupStorageListener();
+
+            // Check if we were opened from App B
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('from') === 'appB') {
+                showNotification('✅ Switched from App B!');
+                updateStatus('Switched from App B');
+            }
+        });
+
+        // Navigate to App B
+        function navigateToAppB() {
+            try {
+                // Try to open/focus App B in a named window
+                // Using a consistent name allows reuse of the same tab
+                appBWindow = window.open(
+                    APP_B_URL + '?from=appA',
+                    TAB_NAME, // Window name - same name = reuse tab
+                    'width=1200,height=800'
+                );
+
+                if (appBWindow) {
+                    // Check if window was already open (reused)
+                    if (!appBWindow.closed) {
+                        // Focus the existing window
+                        appBWindow.focus();
+                        showNotification('🔄 Switched to App B tab!');
+                    } else {
+                        showNotification('🆕 Opened App B in new tab!');
+                    }
+                } else {
+                    // Popup blocked
+                    alert('Popup blocked! Please allow popups for this site.');
+                }
+            } catch (e) {
+                console.error('Error opening App B:', e);
+                showNotification('❌ Error: ' + e.message, 'error');
+            }
+        }
+
+        // Update tab info
+        function updateTabInfo() {
+            document.getElementById('tabName').textContent = 'appA';
+            document.getElementById('windowId').textContent = window.name || 'default';
+            document.getElementById('focused').textContent = document.hasFocus() ? 'Yes' : 'No';
+        }
+
+        // Update status
+        function updateStatus(message) {
+            const status = document.getElementById('status');
+            const statusText = document.getElementById('statusText');
+            statusText.textContent = message;
+            status.classList.add('active');
+            setTimeout(() => {
+                status.classList.remove('active');
+                statusText.textContent = 'This is App A running in the current tab.';
+            }, 3000);
+        }
+
+        // Setup focus listener
+        function setupFocusListener() {
+            window.addEventListener('focus', () => {
+                updateTabInfo();
+                updateStatus('Tab focused - returned from App B');
+            });
+
+            window.addEventListener('blur', () => {
+                updateTabInfo();
+            });
+        }
+
+        // Setup storage listener for cross-tab communication
+        function setupStorageListener() {
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'appA_navigate') {
+                    // App B is requesting to navigate here
+                    window.focus();
+                    updateStatus('Switched from App B via storage event');
+                }
+            });
+        }
+
+        // Show notification
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.background = type === 'error' ? '#ef4444' : '#10b981';
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Periodic update of tab info
+        setInterval(updateTabInfo, 1000);
+
+        // Handle page visibility
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                updateTabInfo();
+                updateStatus('Tab is now visible');
+            }
+        });
+    </script>
+</body>
+
+</html>
