@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalStorage Loss Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+
+        .status.active {
+            background: #10b981;
+            color: white;
+        }
+
+        .status.lost {
+            background: #ef4444;
+            color: white;
+        }
+
+        .status.warning {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .demo-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .demo-section h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .demo-section p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 5px;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        button.danger {
+            background: #ef4444;
+        }
+
+        button.danger:hover {
+            background: #dc2626;
+        }
+
+        button.success {
+            background: #10b981;
+        }
+
+        button.success:hover {
+            background: #059669;
+        }
+
+        .storage-display {
+            background: #1e293b;
+            color: #10b981;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-size: 0.9em;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .storage-display.empty {
+            color: #ef4444;
+        }
+
+        .scenario-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .scenario-list li {
+            padding: 12px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .scenario-list li .icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .info-box {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+        }
+
+        .info-box.warning {
+            background: #fef3c7;
+            border-left-color: #f59e0b;
+        }
+
+        .info-box.error {
+            background: #fee2e2;
+            border-left-color: #ef4444;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .counter-display {
+            font-size: 3em;
+            font-weight: bold;
+            color: #667eea;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .timestamp {
+            color: #666;
+            font-size: 0.85em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗄️ LocalStorage Loss Demonstration</h1>
+
+        <!-- Current Status -->
+        <div class="card">
+            <h2>📊 Current Storage Status</h2>
+            <div id="statusDisplay"></div>
+            <div class="storage-display" id="storageDisplay">
+                <div>Loading...</div>
+            </div>
+            <div style="margin-top: 15px;">
+                <button onclick="saveData()" class="success">💾 Save Test Data</button>
+                <button onclick="clearStorage()" class="danger">🗑️ Clear All Storage</button>
+                <button onclick="refreshStatus()">🔄 Refresh Status</button>
+            </div>
+        </div>
+
+        <!-- Interactive Demo -->
+        <div class="card">
+            <h2>🎮 Interactive Demo</h2>
+            <div class="demo-section">
+                <h3>Counter Test</h3>
+                <p>This counter is saved to localStorage. Try the scenarios below to see when it gets lost!</p>
+                <div class="counter-display" id="counter">0</div>
+                <div style="text-align: center;">
+                    <button onclick="incrementCounter()">➕ Increment</button>
+                    <button onclick="resetCounter()">🔄 Reset</button>
+                </div>
+                <div class="timestamp" id="lastSaved">Never saved</div>
+            </div>
+        </div>
+
+        <!-- Scenarios -->
+        <div class="card">
+            <h2>⚠️ When LocalStorage is Lost</h2>
+            <ul class="scenario-list">
+                <li>
+                    <div>
+                        <span class="icon">🧹</span>
+                        <strong>Browser Data Clearing</strong>
+                        <p style="margin: 5px 0 0 0; color: #666; font-size: 0.9em;">User clears browsing data manually</p>
+                    </div>
+                    <button onclick="simulateClear()" class="danger">Test</button>
+                </li>
+                <li>
+                    <div>
+                        <span class="icon">👻</span>
+                        <strong>Incognito/Private Mode</strong>
+                        <p style="margin: 5px 0 0 0; color: #666; font-size: 0.9em;">Storage cleared when window closes</p>
+                    </div>
+                    <button onclick="showIncognitoInfo()">Info</button>
+                </li>
+                <li>
+                    <div>
+                        <span class="icon">🌐</span>
+                        <strong>Different Domain/Subdomain</strong>
+                        <p style="margin: 5px 0 0 0; color: #666; font-size: 0.9em;">Storage is domain-specific</p>
+                    </div>
+                    <button onclick="showDomainInfo()">Info</button>
+                </li>
+                <li>
+                    <div>
+                        <span class="icon">🔒</span>
+                        <strong>Browser Settings</strong>
+                        <p style="margin: 5px 0 0 0; color: #666; font-size: 0.9em;">"Clear on exit" or privacy settings</p>
+                    </div>
+                    <button onclick="showSettingsInfo()">Info</button>
+                </li>
+                <li>
+                    <div>
+                        <span class="icon">💾</span>
+                        <strong>Storage Quota Exceeded</strong>
+                        <p style="margin: 5px 0 0 0; color: #666; font-size: 0.9em;">Browser may clear old data</p>
+                    </div>
+                    <button onclick="testQuota()">Test</button>
+                </li>
+                <li>
+                    <div>
+                        <span class="icon">🔧</span>
+                        <strong>Programmatic Clearing</strong>
+                        <p style="margin: 5px 0 0 0; color: #666; font-size: 0.9em;">Code explicitly clears storage</p>
+                    </div>
+                    <button onclick="clearStorage()" class="danger">Test</button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Comparison -->
+        <div class="card">
+            <h2>🔄 LocalStorage vs SessionStorage</h2>
+            <div class="grid">
+                <div class="demo-section">
+                    <h3>LocalStorage</h3>
+                    <div class="status active" id="localStorageStatus">Active</div>
+                    <div class="storage-display" id="localStorageData">Empty</div>
+                    <button onclick="saveToLocalStorage()">Save to LocalStorage</button>
+                </div>
+                <div class="demo-section">
+                    <h3>SessionStorage</h3>
+                    <div class="status active" id="sessionStorageStatus">Active</div>
+                    <div class="storage-display" id="sessionStorageData">Empty</div>
+                    <button onclick="saveToSessionStorage()">Save to SessionStorage</button>
+                    <div class="info-box warning" style="margin-top: 10px;">
+                        <strong>⚠️ Note:</strong> SessionStorage is cleared when you close the tab/window!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detection -->
+        <div class="card">
+            <h2>🔍 Storage Change Detection</h2>
+            <div class="demo-section">
+                <h3>Storage Event Listener</h3>
+                <p>Open this page in two tabs. When you modify storage in one tab, the other tab will detect it!</p>
+                <div id="storageEvents" class="storage-display" style="min-height: 100px;">
+                    <div>Waiting for storage events...</div>
+                </div>
+                <div class="info-box">
+                    <strong>💡 Tip:</strong> Open this page in a new tab to see cross-tab communication!
+                </div>
+            </div>
+        </div>
+
+        <!-- Best Practices -->
+        <div class="card">
+            <h2>✅ Best Practices</h2>
+            <div class="info-box">
+                <strong>1. Never rely solely on localStorage for critical data</strong>
+                <p style="margin-top: 5px;">Always have a server-side backup or sync mechanism.</p>
+            </div>
+            <div class="info-box">
+                <strong>2. Handle storage errors gracefully</strong>
+                <p style="margin-top: 5px;">Use try-catch blocks when accessing localStorage.</p>
+            </div>
+            <div class="info-box">
+                <strong>3. Check storage availability</strong>
+                <p style="margin-top: 5px;">Some browsers or privacy modes may disable localStorage.</p>
+            </div>
+            <div class="info-box warning">
+                <strong>4. Respect user privacy</strong>
+                <p style="margin-top: 5px;">Don't store sensitive information in localStorage without encryption.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'demo_data';
+        const COUNTER_KEY = 'demo_counter';
+        const TIMESTAMP_KEY = 'demo_timestamp';
+
+        // Initialize
+        function init() {
+            refreshStatus();
+            loadCounter();
+            updateStorageDisplays();
+            setupStorageListener();
+            checkStorageAvailability();
+        }
+
+        // Check if storage is available
+        function checkStorageAvailability() {
+            try {
+                const test = '__storage_test__';
+                localStorage.setItem(test, test);
+                localStorage.removeItem(test);
+                return true;
+            } catch (e) {
+                document.getElementById('statusDisplay').innerHTML = 
+                    '<div class="status lost">❌ LocalStorage is NOT available (may be disabled or in private mode)</div>';
+                return false;
+            }
+        }
+
+        // Refresh status display
+        function refreshStatus() {
+            const statusDiv = document.getElementById('statusDisplay');
+            const storageDiv = document.getElementById('storageDisplay');
+            
+            try {
+                const data = localStorage.getItem(STORAGE_KEY);
+                const hasData = data !== null && data !== '';
+                
+                if (hasData) {
+                    statusDiv.innerHTML = '<div class="status active">✅ LocalStorage contains data</div>';
+                    storageDiv.className = 'storage-display';
+                    storageDiv.textContent = data;
+                } else {
+                    statusDiv.innerHTML = '<div class="status lost">❌ LocalStorage is empty</div>';
+                    storageDiv.className = 'storage-display empty';
+                    storageDiv.textContent = 'No data stored';
+                }
+            } catch (e) {
+                statusDiv.innerHTML = '<div class="status lost">❌ Error accessing LocalStorage</div>';
+                storageDiv.className = 'storage-display empty';
+                storageDiv.textContent = 'Error: ' + e.message;
+            }
+            
+            updateStorageDisplays();
+        }
+
+        // Save test data
+        function saveData() {
+            try {
+                const data = {
+                    message: 'Hello from LocalStorage!',
+                    timestamp: new Date().toISOString(),
+                    random: Math.random().toString(36).substring(7)
+                };
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data, null, 2));
+                refreshStatus();
+                showNotification('✅ Data saved successfully!', 'success');
+            } catch (e) {
+                showNotification('❌ Error saving data: ' + e.message, 'error');
+            }
+        }
+
+        // Clear storage
+        function clearStorage() {
+            if (confirm('Are you sure you want to clear all localStorage data? This action cannot be undone!')) {
+                try {
+                    localStorage.clear();
+                    refreshStatus();
+                    loadCounter();
+                    showNotification('🗑️ All storage cleared!', 'warning');
+                } catch (e) {
+                    showNotification('❌ Error clearing storage: ' + e.message, 'error');
+                }
+            }
+        }
+
+        // Counter functions
+        function loadCounter() {
+            try {
+                const counter = parseInt(localStorage.getItem(COUNTER_KEY) || '0');
+                const timestamp = localStorage.getItem(TIMESTAMP_KEY);
+                document.getElementById('counter').textContent = counter;
+                document.getElementById('lastSaved').textContent = timestamp 
+                    ? 'Last saved: ' + new Date(timestamp).toLocaleString()
+                    : 'Never saved';
+            } catch (e) {
+                console.error('Error loading counter:', e);
+            }
+        }
+
+        function incrementCounter() {
+            try {
+                const current = parseInt(localStorage.getItem(COUNTER_KEY) || '0');
+                const newValue = current + 1;
+                localStorage.setItem(COUNTER_KEY, newValue.toString());
+                localStorage.setItem(TIMESTAMP_KEY, new Date().toISOString());
+                loadCounter();
+                showNotification('✅ Counter incremented!', 'success');
+            } catch (e) {
+                showNotification('❌ Error saving counter: ' + e.message, 'error');
+            }
+        }
+
+        function resetCounter() {
+            if (confirm('Reset counter to 0?')) {
+                try {
+                    localStorage.removeItem(COUNTER_KEY);
+                    localStorage.removeItem(TIMESTAMP_KEY);
+                    loadCounter();
+                    showNotification('🔄 Counter reset!', 'warning');
+                } catch (e) {
+                    showNotification('❌ Error resetting counter: ' + e.message, 'error');
+                }
+            }
+        }
+
+        // Simulate clear
+        function simulateClear() {
+            if (confirm('This will simulate clearing browser data. Continue?')) {
+                clearStorage();
+                showNotification('🧹 Simulated browser data clear!', 'warning');
+            }
+        }
+
+        // Info functions
+        function showIncognitoInfo() {
+            alert('In Incognito/Private mode:\n\n' +
+                  '• LocalStorage is cleared when you close the window\n' +
+                  '• Each incognito session is isolated\n' +
+                  '• Data does NOT persist between sessions\n\n' +
+                  'To test: Open this page in an incognito window!');
+        }
+
+        function showDomainInfo() {
+            alert('Domain-specific storage:\n\n' +
+                  '• localStorage is tied to the exact domain\n' +
+                  '• example.com ≠ www.example.com\n' +
+                  '• http:// ≠ https://\n' +
+                  '• Different ports = different storage\n\n' +
+                  'Current domain: ' + window.location.hostname);
+        }
+
+        function showSettingsInfo() {
+            alert('Browser settings that affect storage:\n\n' +
+                  '• "Clear browsing data on exit"\n' +
+                  '• Privacy mode settings\n' +
+                  '• Third-party cookie blocking\n' +
+                  '• Storage quota limits\n\n' +
+                  'Check your browser settings!');
+        }
+
+        // Test quota
+        function testQuota() {
+            try {
+                let size = 0;
+                const testKey = 'quota_test_';
+                
+                // Try to fill storage
+                for (let i = 0; i < 1000; i++) {
+                    const data = 'x'.repeat(10000); // 10KB per item
+                    try {
+                        localStorage.setItem(testKey + i, data);
+                        size += data.length;
+                    } catch (e) {
+                        if (e.name === 'QuotaExceededError') {
+                            // Clean up
+                            for (let j = 0; j < i; j++) {
+                                localStorage.removeItem(testKey + j);
+                            }
+                            alert('💾 Storage quota exceeded!\n\n' +
+                                  'Attempted to store: ~' + Math.round(size / 1024) + ' KB\n' +
+                                  'Browser cleared old data or rejected new data.');
+                            return;
+                        }
+                    }
+                }
+                
+                // Clean up
+                for (let i = 0; i < 1000; i++) {
+                    localStorage.removeItem(testKey + i);
+                }
+                
+                alert('✅ Storage quota test completed!\n\n' +
+                      'Stored: ~' + Math.round(size / 1024) + ' KB\n' +
+                      'No quota issues detected.');
+            } catch (e) {
+                alert('❌ Error testing quota: ' + e.message);
+            }
+        }
+
+        // LocalStorage vs SessionStorage
+        function saveToLocalStorage() {
+            try {
+                const data = {
+                    type: 'localStorage',
+                    message: 'This persists across browser sessions!',
+                    timestamp: new Date().toISOString()
+                };
+                localStorage.setItem('demo_local', JSON.stringify(data, null, 2));
+                updateStorageDisplays();
+                showNotification('✅ Saved to LocalStorage!', 'success');
+            } catch (e) {
+                showNotification('❌ Error: ' + e.message, 'error');
+            }
+        }
+
+        function saveToSessionStorage() {
+            try {
+                const data = {
+                    type: 'sessionStorage',
+                    message: 'This is cleared when you close the tab!',
+                    timestamp: new Date().toISOString()
+                };
+                sessionStorage.setItem('demo_session', JSON.stringify(data, null, 2));
+                updateStorageDisplays();
+                showNotification('✅ Saved to SessionStorage!', 'success');
+            } catch (e) {
+                showNotification('❌ Error: ' + e.message, 'error');
+            }
+        }
+
+        function updateStorageDisplays() {
+            // LocalStorage
+            try {
+                const localData = localStorage.getItem('demo_local');
+                const localDiv = document.getElementById('localStorageData');
+                if (localData) {
+                    localDiv.textContent = localData;
+                    localDiv.className = 'storage-display';
+                    document.getElementById('localStorageStatus').textContent = 'Has Data';
+                    document.getElementById('localStorageStatus').className = 'status active';
+                } else {
+                    localDiv.textContent = 'Empty';
+                    localDiv.className = 'storage-display empty';
+                    document.getElementById('localStorageStatus').textContent = 'Empty';
+                    document.getElementById('localStorageStatus').className = 'status lost';
+                }
+            } catch (e) {
+                document.getElementById('localStorageData').textContent = 'Error: ' + e.message;
+            }
+
+            // SessionStorage
+            try {
+                const sessionData = sessionStorage.getItem('demo_session');
+                const sessionDiv = document.getElementById('sessionStorageData');
+                if (sessionData) {
+                    sessionDiv.textContent = sessionData;
+                    sessionDiv.className = 'storage-display';
+                    document.getElementById('sessionStorageStatus').textContent = 'Has Data';
+                    document.getElementById('sessionStorageStatus').className = 'status active';
+                } else {
+                    sessionDiv.textContent = 'Empty';
+                    sessionDiv.className = 'storage-display empty';
+                    document.getElementById('sessionStorageStatus').textContent = 'Empty';
+                    document.getElementById('sessionStorageStatus').className = 'status lost';
+                }
+            } catch (e) {
+                document.getElementById('sessionStorageData').textContent = 'Error: ' + e.message;
+            }
+        }
+
+        // Storage event listener (for cross-tab communication)
+        function setupStorageListener() {
+            window.addEventListener('storage', (e) => {
+                const eventsDiv = document.getElementById('storageEvents');
+                const eventInfo = {
+                    key: e.key,
+                    oldValue: e.oldValue,
+                    newValue: e.newValue,
+                    url: e.url,
+                    timestamp: new Date().toLocaleTimeString()
+                };
+                
+                const eventHtml = `
+                    <div style="margin-bottom: 10px; padding: 10px; background: #1e293b; border-radius: 4px;">
+                        <strong style="color: #10b981;">📢 Storage Event Detected!</strong><br>
+                        <span style="color: #94a3b8;">Key:</span> ${eventInfo.key || '(cleared)'}<br>
+                        <span style="color: #94a3b8;">Time:</span> ${eventInfo.timestamp}<br>
+                        <span style="color: #94a3b8;">From:</span> ${eventInfo.url || 'unknown'}
+                    </div>
+                `;
+                
+                eventsDiv.innerHTML = eventHtml + eventsDiv.innerHTML;
+                
+                // Refresh status when storage changes from another tab
+                refreshStatus();
+                loadCounter();
+            });
+        }
+
+        // Notification system
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#f59e0b'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                z-index: 10000;
+                font-weight: 600;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', init);
+        
+        // Refresh on focus (in case storage was cleared in another tab)
+        window.addEventListener('focus', () => {
+            refreshStatus();
+            loadCounter();
+        });
+    </script>
+</body>
+</html>
+
+
+
